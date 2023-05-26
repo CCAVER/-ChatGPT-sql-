@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<f id="form0">
+<div id="li">
+<form method="post" id="form">
+  <p>生成查找sql:<input type="text" id="msg" name="msg" value="查询user表所有数据" /></p>
+    <input type="button" value="提交" onclick="send()" />
+    <input type="reset" value="重填" />
+    <p>
+        查询表的ddl(不输入则默认服务机表):
+    </p>
+  <p>
+    <textarea id="lim" rows="15" cols="30">
+CREATE TABLE `data` (
+  `id` int NOT NULL,
+  `data` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+CREATE TABLE `user` (
+  `uid` int NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+</textarea>
+  </p>
+
+  </td></p>
+
+</form>
+<form action="sql" method="post">
+</form>
+</div>
+</f>
+<table border="1" id="tab">
+</table>
+
+<style>
+  #form0 {
+    display: block;
+    background-color:beige;
+    position:relative;
+    float: left;
+    height: 1024px;
+    width: auto;
+    border-right:2px black double;
+  }
+  #li{
+    display: block;
+    position:relative;
+    float: left;
+  }
+
+</style>
+<SCRIPT>
+  function send(){
+    var msg=document.getElementById("msg").value;
+    var lim=document.getElementById("lim").value;
+    alert("已经提交，请耐心等候");
+    $.ajax({
+      type : "POST",//请求方式
+      contentType: "application/x-www-form-urlencoded",//请求的媒体类型
+      data: {"msg":msg,"lim":lim},
+      url : "sql",//请求地址
+      //data : JSON.stringify(),//数据，json字符串
+      success : function(result) {//请求成功
+        //console.log(result['1'][0]);标准格式
+        var data = result;
+          item="<tr><td>\n" +
+                  "            "+data+"\n" +
+                  "    </td></tr>";
+          $('#tab').append(item);
+      },
+      error : function(e){//请求失败，包含具体的错误信息
+        console.log(e.status);
+        console.log(e.responseText);
+      }
+    });
+  }
+</SCRIPT>
+</body>
+</html>

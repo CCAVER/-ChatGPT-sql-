@@ -1,0 +1,28 @@
+eureka:
+  client:
+    serviceUrl:
+      #服务注册地址
+      defaultZone: http://localhost:8888/eureka/
+server:
+  #运行端口
+  port: 8764
+spring:
+  application:
+    #服务注册名称
+    name: userServ
+  datasource:
+    url: jdbc:mysql://localhost:3306/cpptest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+    mode: HTML5
+open:
+  ai:
+    url: https://api.openai.com
+    token: sk-??????????????????????????????
